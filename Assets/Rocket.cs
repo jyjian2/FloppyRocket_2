@@ -21,10 +21,11 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        Thrust();
+        Rotate();
     }
 
-    private void ProcessInput()
+    private void Thrust()
     {
         // if user input is pressing space, then thrust the rocket
         if (Input.GetKey(KeyCode.Space))
@@ -35,15 +36,22 @@ public class Rocket : MonoBehaviour
             rigidBody.AddRelativeForce(Vector3.up);
             // Control not playing the audio eahc time when user press space. 
             // It should only start when the user press apce and when there's no sound is playing
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
-            else
-            {
-                audioSource.Stop();
-            }    
         }
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.Stop();
+        }    
+    }    
+    private void Rotate()
+    {
+        //control whether physics will change the rotation of the object
+        //Take manual control of rotation
+        rigidBody.freezeRotation = true;
+
         if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward);
@@ -52,5 +60,8 @@ public class Rocket : MonoBehaviour
         {
             transform.Rotate(-Vector3.forward);
         }
+        
+        rigidBody.freezeRotation = false; // resume physics control of rotation
     }
+        
 }
