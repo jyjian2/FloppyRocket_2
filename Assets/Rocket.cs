@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    // Make thrust that we can modified to become an inspector in the of the object
+    [SerializeField] float rcsThrust = 100f;
+    [SerializeField] float mainThrust = 100f;
+    
     //reference rigidbody in this script
     //Crearte a variable of type of Rigidbody
     Rigidbody rigidBody;
-
     //Created a variable of type of audiosource
     AudioSource audioSource;
     // Start is called before the first frame update
@@ -33,14 +36,14 @@ public class Rocket : MonoBehaviour
             // type . can explore what we can do to the variable rigidBody
             // Use relative force means it thrust based on the object itself
             // vecter3 means the position x, y, and z 
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
             // Control not playing the audio eahc time when user press space. 
             // It should only start when the user press apce and when there's no sound is playing
         }
-        if (!audioSource.isPlaying)
-        {
-            audioSource.Play();
-        }
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         else
         {
             audioSource.Stop();
@@ -52,16 +55,22 @@ public class Rocket : MonoBehaviour
         //Take manual control of rotation
         rigidBody.freezeRotation = true;
 
+        
+        float rotateThisFrame = rcsThrust * Time.deltaTime;
+
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotateThisFrame);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(-Vector3.forward * rotateThisFrame);
         }
         
         rigidBody.freezeRotation = false; // resume physics control of rotation
     }
         
 }
+// Time.deltaTime tells us the last frame time, so it's good predictor of the current frame time
+// rotation = rcsThrust * Time.deltaTime;
+// rcsTrust "reaction control thruster thrust vale. 
