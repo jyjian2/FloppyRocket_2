@@ -28,6 +28,23 @@ public class Rocket : MonoBehaviour
         Rotate();
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        // Switch based on the collision comes in, collision.ganeObject means you look at the game object you're collliding with
+        // and reading its tag and switch based on the string.
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                //do nothing
+                print("OK");//remove this line in future
+                break;
+            default:
+                print("Dead");
+                //Kill player
+                break;
+        }
+    }
+
     private void Thrust()
     {
         // if user input is pressing space, then thrust the rocket
