@@ -7,9 +7,13 @@ public class Rocket : MonoBehaviour
     // Make thrust that we can modified to become an inspector in the of the object
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip death;
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem deathParticles;
     
     //reference rigidbody in this script
     //Crearte a variable of type of Rigidbody
@@ -66,7 +70,8 @@ public class Rocket : MonoBehaviour
         state = State.Transcending;
         audioSource.Stop();
         audioSource.PlayOneShot(success);
-        Invoke("LoadNextLevel", 1f);
+        successParticles.Play();
+        Invoke("LoadNextLevel", levelLoadDelay);
         // called routine. Points down to the method "LoadNextLevel" after one second
     }
 
@@ -75,7 +80,8 @@ public class Rocket : MonoBehaviour
         state = State.Dying;
         audioSource.Stop();
         audioSource.PlayOneShot(death);
-        Invoke("LoadFirstLevel", 1f); // parameterise time
+        deathParticles.Play();
+        Invoke("LoadFirstLevel", levelLoadDelay); // parameterise time
     }
 
 
@@ -100,6 +106,7 @@ public class Rocket : MonoBehaviour
         else
         {
             audioSource.Stop();
+            mainEngineParticles.Stop();
         }    
     }
 
@@ -114,7 +121,9 @@ public class Rocket : MonoBehaviour
         if (!audioSource.isPlaying) // so it doesn't layer
         {
             audioSource.PlayOneShot(mainEngine);
+            mainEngineParticles.Play();
         }
+        mainEngineParticles.Play();
     }
 
     private void RespondToRotateInput()

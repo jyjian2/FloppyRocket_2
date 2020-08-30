@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Oscillator.cs" />
      <Compile Include="Assets\Rocket.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2019.4.6f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
