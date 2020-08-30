@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+//scene management to control switching in different level
 
 public class Rocket : MonoBehaviour
 {
@@ -14,6 +14,10 @@ public class Rocket : MonoBehaviour
     //Created a variable of type of audiosource
     AudioSource audioSource;
     // Start is called before the first frame update
+
+    // List three state 
+    enum State { Alive, Dying, Transcending }
+    State state = State.Alive;
     void Start()
     {
         //Ask Only to act on the component of ridgidbody(*genetics)
@@ -24,25 +28,49 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Thrust();
-        Rotate();
+        // There's one second waiting time for loading another level.
+        //Add this condition to allow user to only play somthing when the status is Alive
+        if (state == State.Alive)
+        {
+            Thrust();
+            Rotate();
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive){return;} // ignore collision when dead
         // Switch based on the collision comes in, collision.ganeObject means you look at the game object you're collliding with
         // and reading its tag and switch based on the string.
         switch (collision.gameObject.tag)
         {
             case "Friendly":
                 //do nothing
-                print("OK");//remove this line in future
                 break;
+
+            case "Finish":
+                state = State.Transcending;
+                Invoke("LoadNextLevel", 1f); 
+                // called routine. Points down to the method "LoadNextLevel" after one second
+                break;
+
             default:
-                print("Dead");
-                //Kill player
+                print("Hit something deadly");
+                state = State.Dying;
+                Invoke("LoadFirstLevel", 1f); // parameterise time
                 break;
         }
+    }
+
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(1); // allow for more than 2 levels
+
+    }
+
+    private void LoadFirstLevel()
+    {
+        SceneManager.LoadScene(0);
     }
 
     private void Thrust()
