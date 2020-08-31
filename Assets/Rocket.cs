@@ -99,7 +99,7 @@ public class Rocket : MonoBehaviour
     private void RespondToThrustInput()
     {
         // if user input is pressing space, then thrust the rocket
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.P))
         {
             ApplyThrust();
         }

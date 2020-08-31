@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rcsThrust: 40
   mainThrust: 50
+  levelLoadDelay: 2
   mainEngine: {fileID: 8300000, guid: e0722fca7542f494890c3a7cefee890b, type: 3}
   success: {fileID: 8300000, guid: b360b679a1e30493988c414ce4c7db98, type: 3}
   death: {fileID: 8300000, guid: 0f7ccec25f7474a149cdf16dfcd42dae, type: 3}
@@ -652,7 +653,7 @@ PrefabInstance:
     - target: {fileID: 8793466783630021756, guid: fd38e2b7b7bfe4463842c4d31fc6c26d,
         type: 3}
       propertyPath: m_Name
-      value: Main Rocket Ship
+      value: Main Rocket Ship Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8793466784023152809, guid: fd38e2b7b7bfe4463842c4d31fc6c26d,
         type: 3}
